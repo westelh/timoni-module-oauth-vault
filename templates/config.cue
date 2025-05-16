@@ -40,7 +40,7 @@ import (
 	// tag, digest and pull policy.
 	image: timoniv1.#Image & {
 		repository: *"ghcr.io/westelh/oauth-vault" | string
-		tag:        *"v1.0.0-bata" | string
+		tag:        *"v1.0.0-beta" | string
 		digest:     *"" | string
 	}
 
