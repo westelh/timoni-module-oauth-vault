@@ -39,8 +39,8 @@ import (
 	// The image allows setting the container image repository,
 	// tag, digest and pull policy.
 	image: timoniv1.#Image & {
-		repository: *"docker.io/nginx" | string
-		tag:        *"1-alpine" | string
+		repository: *"ghcr.io/westelh/oauth-vault" | string
+		tag:        *"v1.0.0-bata" | string
 		digest:     *"" | string
 	}
 
@@ -94,6 +94,50 @@ import (
 
 		port: *80 | int & >0 & <=65535
 	}
+
+	oauthVault: {
+		publicUrl: *"http://localhost:8080" | string
+		modules: *[
+				"dev.westelh.ApplicationKt.root",
+				"dev.westelh.ApplicationKt.oauth",
+				"dev.westelh.ApplicationKt.oidc",
+				"dev.westelh.ApplicationKt.api",
+				"dev.westelh.ApplicationKt.user",
+		] | [string]
+	}
+
+	vault: {
+		server: {
+			address: string
+			auth: {
+				kubernetes: {
+					role: *"oauth-vault" | string
+				}
+			}
+			oidc: {
+				provider: *"default" | string
+				client: *"oauth-vault" | string
+			}
+			identity: {
+				jwt: {
+					issuer: string
+					audience: string
+				}
+			}
+		}
+		sidecar: {
+			image: timoniv1.#Image & {
+				repository: *"hashicorp/vault" | string
+				tag: *"1.19" | string
+				digest: *"" | string
+			}
+			proxy: {
+				host: *"0.0.0.0" | string
+				port: *8100 | int
+				address: "\(host):\(port)"
+			}
+		}
+	}
 }
 
 // Instance takes the config values and outputs the Kubernetes objects.
@@ -103,5 +147,6 @@ import (
 	objects: {
 		deploy: #Deployment & {#config: config}
 		service: #Service & {#config: config}
+		configMap: #ConfigMap & {#config: config}
 	}
 }
