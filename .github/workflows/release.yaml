@@ -20,7 +20,7 @@ jobs:
           timoni mod lint . --debug
       - name: Test instance build
         run: |
-          timoni build -n testing test .
+          timoni build -n testing test . --values debug_values.cue
       - name: Push
         run: |
           timoni mod push . \
