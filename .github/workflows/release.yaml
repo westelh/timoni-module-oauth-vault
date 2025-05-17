@@ -17,7 +17,7 @@ jobs:
         uses: stefanprodan/timoni/actions/setup@main
       - name: Lint
         run: |
-          timoni mod lint .
+          timoni mod lint . --debug
       - name: Test instance build
         run: |
           timoni build -n testing test .
