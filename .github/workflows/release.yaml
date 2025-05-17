@@ -26,5 +26,6 @@ jobs:
           timoni mod push . \
             oci://ghcr.io/${{ github.repository_owner }}/timoni/modules/${{ github.repository }} \
             --version ${{ github.ref_name }} \
-            --creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-            -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}' \
+            --creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} \
+            --latest \
+            -a 'org.opencontainers.image.source=https://github.com/${{ github.repository }}'
