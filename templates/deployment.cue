@@ -79,7 +79,7 @@ import (
 						]
 						ports: [
 							{
-								name:          "http"
+								name:          "proxy"
 								containerPort: #config.vault.sidecar.proxy.port
 								protocol:      "TCP"
 							},
