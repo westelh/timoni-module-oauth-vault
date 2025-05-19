@@ -6,4 +6,21 @@
 package main
 
 // Placeholder for user-supplied values.
-values: {}
+values: {
+	vault: {
+		server: {
+			address: "http://host.docker.internal:8200"
+			auth: {
+				kubernetes: {
+					role: "oauth-vault"
+				}
+			}
+			identity: {
+				jwt: {
+					issuer:   ""
+					audience: ""
+				}
+			}
+		}
+	}
+}
